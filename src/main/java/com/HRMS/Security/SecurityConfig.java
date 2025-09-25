@@ -36,9 +36,9 @@ public class SecurityConfig {
 		httpSecurity.csrf(AbstractHttpConfigurer::disable)
 		.cors(Customizer.withDefaults())
 		.authorizeHttpRequests(request -> request
+				.requestMatchers("/auth/register").permitAll()// Only for ADMIN
 				.requestMatchers("/auth/**","/users/**","/leave/**","/performance/**","/paySlips/**","/contact/**").permitAll()
 				.requestMatchers("/users/allUsers","/users/delete/**","/users/get-by-id/**").hasAnyAuthority("ADMIN","HR")// For ADMIN or HR
-				.requestMatchers("/auth/register").permitAll()// Only for ADMIN
 				.anyRequest().authenticated())
 		.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.authenticationProvider(authenticationProvider())
